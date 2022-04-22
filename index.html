@@ -1,15 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assets/styles.css">
-    <title>Vue First Project</title>
-  </head>
-  <body>
-    <div id="app">
-      <h3>Product goes here</h3>
-    </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" href="assets/styles.css" />
+      <script type="importmap">
+         {
+            "imports": {
+               "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+            }
+         }
+      </script>
+      <title>Vue First Project</title>
+   </head>
+   <body>
+      <div id="app">
+         <nav class="nav-bar">
+           <div class="cart">
+             <img src="/assets/images/cart.svg" alt="cart icon" width="30" height="30">
+             <div class="cart-num" v-if="cart > 0">
+              {{cart}}
+            </div>
+            </div>
+         </nav>
+            <div class="product-container">
+               <div class="product-image">
+                  <img :src="image" class="image-product" alt="picture of product" />
+               </div>
+               <div class="product-info">
+                  <h1>{{product}}</h1>
+                  <div class="about-product">
+                     <div>
+                        <span class="stock in-stock" v-if="inventory > 10"
+                           >In Stock</span
+                        >
+                        <span
+                           class="stock almost-sold"
+                           v-else-if="inventory <= 10 && inventory > 0"
+                           >Almost Sold Out !</span
+                        >
+                        <span class="stock out-of-stock" v-else
+                           >Out of Stock</span
+                        >
+                     </div>
+                     <div>
+                      <ul class="list-size choose-color">
+                        <li class="size" v-for="variant in variants" @mouseover="updateImage(variant.image)">{{variant.color}}</li>
+                     </ul>
+                     </div>
+                     <div>
+                    </div>
+                  </div>
+                  <ul class="detail list-size">
+                     <li class="size" v-for="size in sizes">{{size}}</li>
+                  </ul>
+                  <!-- <ul class="detail">
+                     <li v-for="detail in details">{{detail}}</li>
+                  </ul> -->
+
+               </div>
+            </div>
+            <div class="button-group">
+              <button class="button" @click="addToCart">Add to Cart</button>
+              <button class="button" @click="removeFromCart">Remove </button>
+            </div>
+         </div>
+      </div>
+      <script type="module" src="main.js"></script>
+   </body>
 </html>
